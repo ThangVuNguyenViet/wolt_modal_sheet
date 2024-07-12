@@ -49,6 +49,7 @@ class _WoltModalSheetAnimatedSwitcherState
   int get _pagesCount => widget.pages.length;
 
   int get _pageIndex => widget.pageIndex;
+  int? _oldPageIndex;
 
   SliverWoltModalSheetPage get _page => widget.pages[_pageIndex];
 
@@ -183,6 +184,11 @@ class _WoltModalSheetAnimatedSwitcherState
     super.didUpdateWidget(oldWidget);
     final oldPageIndex = oldWidget.pageIndex;
     final newPageIndex = widget.pageIndex;
+
+    setState(() {
+      _oldPageIndex = oldPageIndex;
+    });
+
     _isForwardMove = oldPageIndex < newPageIndex;
 
     final isSamePageList = oldWidget.pages == widget.pages;
@@ -361,8 +367,9 @@ class _WoltModalSheetAnimatedSwitcherState
         controller: animationController,
         incomingOffstagedMainContentKey:
             _incomingOffstagedMainContentKeys[_pageIndex],
-        outgoingOffstagedMainContentKey:
-            _outgoingOffstagedMainContentKeys[_pageIndex],
+        outgoingOffstagedMainContentKey: _oldPageIndex != null
+            ? _mainContentKeys[_oldPageIndex!]
+            : _outgoingOffstagedMainContentKeys[_pageIndex],
         forwardMove: _isForwardMove,
         sheetWidth: widget.sheetWidth,
         child: _createMainContent(
@@ -437,8 +444,9 @@ class _WoltModalSheetAnimatedSwitcherState
         controller: animationController,
         incomingOffstagedMainContentKey:
             _incomingOffstagedMainContentKeys[_pageIndex],
-        outgoingOffstagedMainContentKey:
-            _outgoingOffstagedMainContentKeys[_pageIndex],
+        outgoingOffstagedMainContentKey: _oldPageIndex != null
+            ? _mainContentKeys[_oldPageIndex!]
+            : _outgoingOffstagedMainContentKeys[_pageIndex],
         forwardMove: _isForwardMove,
         sheetWidth: widget.sheetWidth,
         child: ExcludeFocus(
