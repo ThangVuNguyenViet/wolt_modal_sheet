@@ -367,9 +367,10 @@ class _WoltModalSheetAnimatedSwitcherState
         controller: animationController,
         incomingOffstagedMainContentKey:
             _incomingOffstagedMainContentKeys[_pageIndex],
-        outgoingOffstagedMainContentKey: _oldPageIndex != null
-            ? _mainContentKeys[_oldPageIndex!]
-            : _outgoingOffstagedMainContentKeys[_pageIndex],
+        outgoingOffstagedMainContentKey:
+            _oldPageIndex != null && _mainContentKeys.length > _oldPageIndex!
+                ? _mainContentKeys[_oldPageIndex!]
+                : _outgoingOffstagedMainContentKeys[_pageIndex],
         forwardMove: _isForwardMove,
         sheetWidth: widget.sheetWidth,
         child: _createMainContent(
@@ -444,9 +445,10 @@ class _WoltModalSheetAnimatedSwitcherState
         controller: animationController,
         incomingOffstagedMainContentKey:
             _incomingOffstagedMainContentKeys[_pageIndex],
-        outgoingOffstagedMainContentKey: _oldPageIndex != null
-            ? _mainContentKeys[_oldPageIndex!]
-            : _outgoingOffstagedMainContentKeys[_pageIndex],
+        outgoingOffstagedMainContentKey:
+            _oldPageIndex != null && _mainContentKeys.length > _oldPageIndex!
+                ? _mainContentKeys[_oldPageIndex!]
+                : _outgoingOffstagedMainContentKeys[_pageIndex],
         forwardMove: _isForwardMove,
         sheetWidth: widget.sheetWidth,
         child: ExcludeFocus(
