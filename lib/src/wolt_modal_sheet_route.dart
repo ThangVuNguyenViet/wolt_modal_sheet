@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wolt_modal_sheet/src/theme/wolt_modal_sheet_default_theme_data.dart';
-import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 import 'package:wolt_modal_sheet/src/utils/wolt_modal_type_utils.dart';
+import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class WoltModalSheetRoute<T> extends PageRoute<T> {
   WoltModalSheetRoute({
@@ -11,6 +11,7 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
     this.onModalDismissedWithBarrierTap,
     this.onModalDismissedWithDrag,
     this.modalBarrierColor,
+    this.modalKey,
     WoltModalTypeBuilder? modalTypeBuilder,
     bool? enableDrag,
     bool? showDragHandle,
@@ -57,6 +58,8 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
   /// is not just a passive observer.
   final AnimationController? _transitionAnimationController;
 
+  final Key? modalKey;
+
   @override
   bool get barrierDismissible =>
       _barrierDismissible ??
@@ -84,6 +87,7 @@ class WoltModalSheetRoute<T> extends PageRoute<T> {
     Animation<double> secondaryAnimation,
   ) {
     return WoltModalSheet(
+      key: modalKey,
       route: this,
       decorator: decorator,
       pageIndexNotifier: pageIndexNotifier ?? ValueNotifier(0),
