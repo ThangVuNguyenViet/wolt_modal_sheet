@@ -82,7 +82,7 @@ class WoltModalSheet<T> extends StatefulWidget {
   /// A boolean that determines whether the modal should avoid system UI intrusions such as the
   /// notch and system gesture areas.
   final bool? useSafeArea;
-  static const ParametricCurve<double> animationCurve = decelerateEasing;
+  static const ParametricCurve<double> animationCurve = Easing.legacyDecelerate;
 
   @override
   State<WoltModalSheet> createState() => WoltModalSheetState();
@@ -356,12 +356,15 @@ class WoltModalSheetState extends State<WoltModalSheet> {
           children: [
             LayoutId(
               id: barrierLayoutId,
-              child: WoltAnimatedModalBarrier(
-                animationController: widget.route.animationController!,
-                barrierDismissible: widget.route.barrierDismissible,
-                onModalDismissedWithBarrierTap:
-                    widget.onModalDismissedWithBarrierTap,
-              ),
+              child: widget.route.barrierDismissible ||
+                      widget.onModalDismissedWithBarrierTap != null
+                  ? WoltAnimatedModalBarrier(
+                      animationController: widget.route.animationController!,
+                      barrierDismissible: widget.route.barrierDismissible,
+                      onModalDismissedWithBarrierTap:
+                          widget.onModalDismissedWithBarrierTap,
+                    )
+                  : const SizedBox(),
             ),
             LayoutId(
               id: contentLayoutId,
